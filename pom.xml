@@ -10,6 +10,7 @@
     <description>pioneer project for Spring Boot</description>
     <modules>
         <module>i-dc</module>
+        <module>i-clothes</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
