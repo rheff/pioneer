@@ -1,4 +1,4 @@
-package idc;
+package cn.ymcat.idc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

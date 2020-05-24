@@ -4,12 +4,12 @@
  *
  * @Project: pioneer
  * @File: SpecController
- * @Package: com.ym.idc.controller
+ * @Package: com.ym.cn.ymcat.idc.controller
  * @Date: 2020年05月20日
  * @Author:lqm48330@chebada.com
  *
  */
-package idc.controller;
+package cn.ymcat.idc.controller;
 
 /**
  * @description: specification
