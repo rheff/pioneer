@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author 86152
  */
 @Data
-@ApiModel(value = "短文")
+@ApiModel(value = "短文", description = "短文")
 public class EssayRequest implements Serializable {
 
     public interface CreateGroup {

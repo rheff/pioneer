@@ -2,9 +2,9 @@ package cn.ymcat.ihome.controller;
 
 
 import cn.ymcat.ihome.domain.requst.essay.EssayRequest;
+import cn.ymcat.ihome.domain.response.BaseResponse;
 import cn.ymcat.ihome.domain.response.EssayResponse;
 import cn.ymcat.ihome.domain.response.EssayResponseBody;
-import cn.ymcat.ihome.domain.response.BaseResponse;
 import cn.ymcat.ihome.entity.Essay;
 import cn.ymcat.ihome.service.EssayService;
 import com.alibaba.fastjson.JSON;
@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author 86152
@@ -38,9 +38,10 @@ public class EssayController {
 
     /**
      * 新增文章
+     *
      * @return
      */
-    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation("新增文章")
     public BaseResponse create(@Validated({EssayRequest.CreateGroup.class}) @RequestBody EssayRequest request, BindingResult result) {
@@ -54,7 +55,7 @@ public class EssayController {
         Essay essay = JSON.parseObject(JSON.toJSONString(request), Essay.class);
         BeanUtils.copyProperties(request, essay);
         essay.setId(null);
-        essay.setServiceId("ES"+System.currentTimeMillis());
+        essay.setServiceId("ES" + System.currentTimeMillis());
         essay.setCreateDate(LocalDateTime.now());
         essay.setModifyDate(LocalDateTime.now());
         essayService.save(essay);
@@ -63,14 +64,15 @@ public class EssayController {
 
     /**
      * 首页获取随机列表
+     *
      * @return
      */
-    @RequestMapping(value = "/randomlist",method = RequestMethod.POST)
+    @RequestMapping(value = "/randomlist", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation("首页获取随机列表")
-    public BaseResponse<EssayResponse> startSpringBoot(@Validated({EssayRequest.ListGroup.class})@RequestBody EssayRequest request, BindingResult result) {
+    public BaseResponse<EssayResponse> startSpringBoot(@Validated({EssayRequest.ListGroup.class}) @RequestBody EssayRequest request, BindingResult result) {
         QueryWrapper<Essay> wrapper = new QueryWrapper<>();
-        if (request.getId()!= null) {
+        if (request.getId() != null) {
             wrapper.ne("id", request.getId());
         }
         IPage<Essay> page = essayService.page(new Page<>(Integer.parseInt(request.getPageNum()), Integer.parseInt(request.getPageSize())), wrapper);
