@@ -42,15 +42,8 @@ public class EssayController {
      * @return
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    @ResponseBody
     @ApiOperation("新增文章")
-    public BaseResponse create(@Validated({EssayRequest.CreateGroup.class}) @RequestBody EssayRequest request, BindingResult result) {
-//        ValidatorFactory validatorFactory = Validation.byProvider( HibernateValidator.class )
-//                .configure()
-//                .addProperty( "hibernate.validator.fail_fast", "true" )
-//                .buildValidatorFactory();
-//        Validator validator = validatorFactory.getValidator();
-//        validator.validate(EssayRequest.CreateGroup.class);
+    public void create(@RequestBody @Validated({EssayRequest.CreateGroup.class}) EssayRequest request) {
         // 插入新记录
         Essay essay = JSON.parseObject(JSON.toJSONString(request), Essay.class);
         BeanUtils.copyProperties(request, essay);
@@ -59,7 +52,6 @@ public class EssayController {
         essay.setCreateDate(LocalDateTime.now());
         essay.setModifyDate(LocalDateTime.now());
         essayService.save(essay);
-        return new BaseResponse();
     }
 
     /**
@@ -68,9 +60,8 @@ public class EssayController {
      * @return
      */
     @RequestMapping(value = "/randomlist", method = RequestMethod.POST)
-    @ResponseBody
     @ApiOperation("首页获取随机列表")
-    public BaseResponse<EssayResponse> startSpringBoot(@Validated({EssayRequest.ListGroup.class}) @RequestBody EssayRequest request, BindingResult result) {
+    public EssayResponse startSpringBoot(@Validated({EssayRequest.ListGroup.class}) @RequestBody EssayRequest request) {
         QueryWrapper<Essay> wrapper = new QueryWrapper<>();
         if (request.getId() != null) {
             wrapper.ne("id", request.getId());
@@ -80,7 +71,7 @@ public class EssayController {
         List<EssayResponseBody> recordRsp = JSON.parseArray(JSON.toJSONString(records), EssayResponseBody.class);
         EssayResponse response = new EssayResponse();
         response.setRecords(recordRsp);
-        return new BaseResponse().buildBody(response);
+        return response;
     }
 
 
